@@ -18,27 +18,31 @@ class Ball {
         var alongAfter = p5.Vector.mult(along, -1 * this.frictionCoeff)
         this.vel = p5.Vector.add(alongAfter, perp)
     }
-    removeOverlap(dist) {
-        this.pos.sub(p5.Vector.mult(this.vel.copy().normalize(), dist))
+    removeOverlap(dist, normal) {
+        this.pos.sub(p5.Vector.mult(normal, dist))
     }
     bounce() {
         if(this.pos.x > side - this.r) {
             this.vel.x *= -1 * this.frictionCoeff
             var overlap = (side - this.r) - this.pos.x
-            this.removeOverlap(overlap)
+            var normal = createVector(-1, 0)
+            this.removeOverlap(overlap, normal)
         } else if(this.pos.x < this.r) {
             this.vel.x *= -1 * this.frictionCoeff
             var overlap = this.pos.x - (this.r)
-            this.removeOverlap(overlap)
+            var normal = createVector(1, 0)
+            this.removeOverlap(overlap, normal)
         }
         if(this.pos.y > side - this.r) {
             this.vel.y *= -1 * this.frictionCoeff
             var overlap = (side - this.r) - this.pos.y
-            this.removeOverlap(overlap)
+            var normal = createVector(0, -1)
+            this.removeOverlap(overlap, normal)
         } else if(this.pos.y < this.r) {
             this.vel.y *= -1 * this.frictionCoeff
             var overlap = this.pos.y - (this.r)
-            this.removeOverlap(overlap)
+            var normal = createVector(0, 1)
+            this.removeOverlap(overlap, normal)
         }
     }
     wrap() {

@@ -58,7 +58,8 @@ function draw() {
             var dist = ball.pos.dist(obstruction.pos) - (ball.r + obstruction.r)
             if(dist <= 0) {
                 ball.collision(obstruction)
-                ball.removeOverlap(dist)
+                var normal = p5.Vector.sub(ball.pos, obstruction.pos).normalize()
+                ball.removeOverlap(dist, normal)
             }
         }
         ball.update()
